@@ -1,0 +1,47 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.*;
+import javax.swing.*;
+
+public class DrawChart extends JPanel implements ActionListener {
+	private double a;
+	private double b;
+	private double c;
+	private static final int SCALE = 5;
+	private static final int X = 500;
+	private static final int Y = 430;
+	
+    private int x, y;
+    
+
+	
+	DrawChart(double a, double b, double c){
+		this.a = a;
+		this.b = b;
+		this.c = c;
+	}
+	
+	public void paintComponent (Graphics g) {
+		super.paintComponent(g);
+        for (x = -210; x <= 210; x++) {
+            y = (int) (a * x * x + b * x + c);
+            g.setColor(new Color(255,0,110));
+            int w = (int) ((x * SCALE) + X / 2);
+            int h = (int) ((-y * SCALE) + Y / 2) - 6;
+            g.fillOval(w, h, 5, 5);
+        }
+		/*g.setColor(Color.red);
+	       for (int x = 0; x < 430; x+=1)
+	       {
+	         int y = (int)(a*x*x+b*x+c);
+		     g.drawLine(x, y, 1, 1);	          
+	       }*/
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}			
+		
+}

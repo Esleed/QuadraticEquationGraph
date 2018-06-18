@@ -1,0 +1,71 @@
+
+public class QuadraticEquation {
+
+	private double A;
+	private double B;
+	private double C;
+	double x1;
+	double x2;
+	String X1;
+	String X2;
+	
+	public QuadraticEquation(double a, double b, double c){
+		this.A = a;
+		this.B = b;
+		this.C = c;
+	}
+	
+	public String solve() {
+		String solution = "";
+		double delta;
+		delta = (B*B - 4*A*C);
+		
+		if (delta > 0) {
+			delta = Math.sqrt(delta);
+			this.x1 = (-B - delta) / (2 * A);
+			this.X1 = String.valueOf(x1);
+			this.x2 = (-B + delta) / (2 * A);
+			this.X2 = String.valueOf(x2);
+			solution = "Równanie posiada dwa pierwiastki rzeczywiste:";
+		}
+		
+		else if (delta == 0) {
+			delta = Math.sqrt(delta);
+			this.x1 = (-B) / (2 * A);
+			this.X1 = String.valueOf(x1);
+			this.x2 = x1;
+			this.X2 = String.valueOf(x2);
+			solution = "Równanie posiada jeden pierwiastek rzeczywisty";
+		}
+		
+		else {
+			this.X1 = "-";
+			this.X2 = "-";
+			solution = "Równanie nie posiada pierwiastków rzeczywistych";
+		} return solution;
+	} 
+	
+	public void SolveInt() {
+		for (int x = 0; x < 430; x++) {
+			int y = (int)( A*x*x + B*x + C);
+		}
+	}
+	
+	
+	public String toString() {
+		return A + "x^2 + " + B + "x + " + C;
+	}
+	
+	public String X1toStirng() {
+		return X1;
+	}
+	
+	public String X2toString() {
+		return X2;
+	}
+	
+	public static void main(String[] args) {
+		QuadraticEquation equation = new QuadraticEquation(1, 4, -2);
+	}
+	
+}

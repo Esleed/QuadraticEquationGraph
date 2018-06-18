@@ -1,0 +1,157 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputMethodListener;
+
+import javax.swing.*;
+import java.awt.geom.*;
+
+public class GUI extends JFrame implements ActionListener {
+	
+	private JButton bCount;
+	JMenuItem mSave, mClose;
+	private JLabel lCommand, lA, lB, lC, lF, lX1, lX2;
+	JMenuBar mbMenuBar;
+	JMenu menuFile;
+	private JTextField tA, tB, tC, tResult, tFormula, tX1, tX2;
+	double a, b, c;
+	boolean chartCheck = false;
+	DrawChart dChart;
+	DrawAxis dAxis;
+	
+	public GUI() {
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocation(50,0);
+	
+		JPanel pBackground = new JPanel();
+		setTitle("Obliczanie pierwiastków równania kwadratowego");
+		pBackground.setBackground(new Color(165,165,165));
+		pBackground.setPreferredSize(new Dimension (600,700));
+	
+		//menu
+		mbMenuBar = new JMenuBar();
+		setJMenuBar(mbMenuBar);
+		menuFile = new JMenu ("Plik");
+		mSave = new JMenuItem("Zapisz");
+		mClose = new JMenuItem ("Zamknij");
+		menuFile.add(mSave);
+		menuFile.addSeparator();
+		menuFile.add(mClose);
+		mbMenuBar.add(menuFile);
+		
+		mClose.addActionListener(this);
+		
+		lCommand = new JLabel ("Podaj współczynniki równania:", JLabel.LEFT);
+		lCommand.setBounds(50, 30, 200, 20);
+		add(lCommand);
+	
+		// współczynnik A
+		lA = new JLabel("A:", JLabel.LEFT);
+		lA.setBounds(50, 80, 15, 20);
+		add(lA);
+		tA = new JTextField();
+		tA.setBounds (75, 80,70,20);
+		tA.setToolTipText("Podaj współczynnik A");
+		add(tA);
+		
+		// współczynnik B
+		lB = new JLabel("B:", JLabel.LEFT);
+		lB.setBounds(50, 110, 15, 20);
+		add(lB);
+		tB = new JTextField();
+		tB.setBounds(75,110,70,20);
+		tB.setToolTipText("Podaj współczynnik B");
+		add(tB);
+		
+		// współczynnik C
+		lC = new JLabel("C:", JLabel.LEFT);
+		lC.setBounds(50, 140, 15, 20);
+		add(lC);
+		tC = new JTextField();
+		tC.setBounds(75, 140, 70, 20);
+		tC.setToolTipText("Podaj współczynnik C");
+		add(tC);
+		
+		// przycisk "Oblicz"
+		bCount = new JButton("Oblicz");
+		bCount.setBounds(75, 170, 70, 20);
+		bCount.addActionListener(this);
+		add(bCount);
+		
+		// Wynik
+		// równanie
+		lF = new JLabel("f(x) =", JLabel.LEFT);
+		lF.setBounds(190, 80, 30, 20);
+		add(lF);
+		tFormula = new JTextField();
+		tFormula.setBounds(225, 80, 300, 20);
+		add(tFormula);
+		//opis
+		tResult = new JTextField();
+		tResult.setBounds(225, 110, 300, 20);
+		add(tResult);
+		// pierwiastki
+		lX1 = new JLabel("x1 =", JLabel.LEFT);
+		lX1.setBounds(190, 140, 30, 20);
+		add(lX1);
+		tX1 = new JTextField();
+		tX1.setBounds(225,140,50,20);
+		add(tX1);
+		lX2 = new JLabel("x2 =", JLabel.LEFT);
+		lX2.setBounds(300, 140, 30, 20);
+		add(lX2);
+		tX2 = new JTextField();
+		tX2.setBounds(335, 140, 50, 20);
+		add(tX2);
+		
+		dAxis = new DrawAxis();
+		dAxis.setBounds(50, 220, 500, 430);
+		dAxis.setBorder(BorderFactory.createLineBorder(Color.black));
+		add(dAxis);	
+		
+		dChart = new DrawChart(a,b,c);
+		dChart.setBounds(50, 220, 500, 430);
+		add(dChart);
+		
+		JPanel Chart = new JPanel();
+		Chart.setBounds(50, 220, 500, 430);
+		Chart.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		getContentPane().add(Chart);
+		getContentPane().add(pBackground);
+		pack();
+		this.setVisible(true);
+	
+	}
+	
+
+	
+	
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if (source == bCount) {
+			//zamiana wprowadzonych danych współczynników na liczbę
+			this.a = Double.parseDouble(tA.getText());
+			this.b = Double.parseDouble(tB.getText());
+			this.c = Double.parseDouble(tC.getText());
+			
+			QuadraticEquation qe = new QuadraticEquation(a, b, c);
+			//wypisywanie danych w odpowiednich polach
+			tFormula.setText(qe.toString());
+			tResult.setText(qe.solve());
+			tX1.setText(qe.X1toStirng());
+			tX2.setText(qe.X2toString());
+			
+		}
+		
+		if (source == mClose) {
+			// zamykanie programu opcją zamknij w menu File
+			dispose();			
+		}
+	}
+	
+	public static void main(String[] args) {
+		new GUI();
+	}
+}

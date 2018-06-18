@@ -1,0 +1,28 @@
+import java.awt.*;
+import java.awt.geom.*;
+import javax.swing.*;
+
+
+public class DrawAxis extends JPanel{
+
+	public void paint (Graphics g) {
+		
+		g.setColor(Color.lightGray);
+		//siatka OY
+		for (int y = 10; y < 500; y += 10) {
+			g.drawLine(y, 1, y, 428);
+		}
+		
+		// siatka OX
+		for (int x = 10; x < 430; x +=10 ) {
+			g.drawLine(1, x, 498, x);
+		}
+
+		g.setColor(Color.BLACK);
+		// OY
+		g.drawLine(250, 0, 250, 430);
+		// OX
+		g.drawLine(0, 210, 500, 210);
+	}
+	
+}
